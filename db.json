@@ -1,0 +1,109 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "User",
+      "email": "random@gmail.com",
+      "password": "123",
+      "image": "image",
+      "provider": "credential",
+      "isAdmin": true
+    }
+  ],
+  "customer_message": [
+    {
+      "id": "1",
+      "name": "User",
+      "email": "random@gmail.com",
+      "customer_message": "I like your cakes"
+    }
+  ],
+  "categories": [
+    {
+      "id": "1",
+      "alias": "chocolate",
+      "name": "Chocolate cakes",
+      "image": "/categories/chocolate_cakes.jpg",
+      "alt": "Сhocolate cakes",
+      "description": "For chocolate lovers",
+      "userId": "1"
+    },
+    {
+      "id": "2",
+      "alias": "fruit",
+      "name": "Fruit cakes",
+      "image": "/categories/fruit_cakes.jpg",
+      "alt": "Fruit cakes",
+      "description": "For fruit lovers",
+      "userId": "1"
+    },
+    {
+      "id": "3",
+      "alias": "unusual",
+      "name": "Unusual cakes",
+      "image": "/categories/unusual_cakes.jpg",
+      "alt": "Unusual cakes",
+      "description": "For unusual cakes lovers",
+      "userId": "1"
+    }
+  ],
+  "cakes": [
+    {
+      "id": "1",
+      "isPublished": true,
+      "name": "Cake 1",
+      "alt": "Cake 1",
+      "description": "Description Chocolate Cake 1",
+      "price": 100,
+      "discount": 10,
+      "addedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "updatedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "image": "/categories/chocolate_cakes.jpg",
+      "alias": "cake_1",
+      "categoryId": "1",
+      "userId": "1",
+      "weight": 1000,
+      "shapeId": "1"
+    },
+    {
+      "id": "2",
+      "isPublished": true,
+      "name": "Cake 2",
+      "alt": "Cake 2",
+      "description": "Description Fruit Cake 2",
+      "price": 100,
+      "discount": 10,
+      "addedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "updatedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "image": "/categories/fruit_cakes.jpg",
+      "alias": "cake_2",
+      "categoryId": "2",
+      "userId": "1",
+      "weight": 1000,
+      "shapeId": "1"
+    },
+    {
+      "id": "3",
+      "isPublished": true,
+      "name": "Cake 3",
+      "alt": "Cake 3",
+      "description": "Description Unusual Cake 3",
+      "price": 100,
+      "discount": 10,
+      "addedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "updatedAt": "Sun Apr 07 2024 17:22:12 GMT+0300 (Восточная Европа, летнее время)",
+      "image": "/categories/unusual_cakes.jpg",
+      "alias": "cake_3",
+      "categoryId": "3",
+      "userId": "1",
+      "weight": 1000,
+      "shapeId": "1"
+    }
+  ],
+  "shapes": [
+    {
+      "id": "1",
+      "name": "star"
+    }
+  ]
+}
