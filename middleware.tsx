@@ -1,38 +1,42 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { pathToRegexp } from "path-to-regexp";
-import { i18n, type DefaultLocale } from "@/i18n-config";
+import { i18n } from "@/i18n-config";
+import { match as matchLocale } from "@formatjs/intl-localematcher";
+import Negotiator from "negotiator";
 // import { auth } from "auth";
-const langs = ["de", "en"];
 
-const protectedPages = ["/protected"];
-const guiestOnlyPages = ["/login"];
-const defaultLocale = i18n.defaultLocale;
+function getLocale(request: NextRequest): string | undefined {
+  const negotiatorHeaders: Record<string, string> = {};
+  request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
+
+  // @ts-ignore locales are readonly
+  const locales: string[] = i18n.locales;
+
+  let languages = new Negotiator({ headers: negotiatorHeaders }).languages(
+    locales
+  );
+
+  const locale = matchLocale(languages, locales, i18n.defaultLocale);
+
+  return locale;
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log("pathname", pathname);
 
-  // const isLangPageRegx = pathToRegexp("/:lang");
-  // console.log("isLangPageRegx", isLangPageRegx);
-  //   console.log("test", isLangPageRegx.test(pathname));
-  //   console.log("exec", isLangPageRegx.exec(pathname));
+  const pathnameIsMissingLocale = i18n.locales.every(
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  );
 
-  // if (
-  //   request.nextUrl.pathname.startsWith("/") ||
-  //   request.nextUrl.pathname.startsWith(`/${defaultLocale}`) ||
-  //   request.nextUrl.pathname.startsWith("/en")
-  // ) {
-  // return NextResponse.redirect(
-  //   new URL(`/${defaultLocale}/homepage`, request.url)
-  // );
-  // }
-
-  const resp = NextResponse.next();
-
-  //   resp.headers.set("x-hello-from-middleware", "hello");
-
-  return resp;
+  if (pathnameIsMissingLocale) {
+    const locale = getLocale(request);
+    return NextResponse.redirect(
+      new URL(
+        `/${locale}${pathname.startsWith("/") ? "/homepage" : "/"}${pathname}`,
+        request.url
+      )
+    );
+  }
 }
 
 export const config = {

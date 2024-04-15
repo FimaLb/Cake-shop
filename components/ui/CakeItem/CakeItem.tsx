@@ -6,7 +6,6 @@ export interface CakeItem extends CakesEntity {
 }
 
 export default function CakeItem({ data }: { data: CakeItem | null }) {
-  console.log("CakeItem", data);
   return (
     <div className='rounded-lg border bg-card p-5 text-card-foreground shadow-sm flex flex-col'>
       <h1 className='justify-self-center self-center pb-5'>{data?.name}</h1>

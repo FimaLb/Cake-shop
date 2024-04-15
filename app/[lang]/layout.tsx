@@ -3,6 +3,7 @@ import "@/app/globals.css";
 import { i18n, type Locale } from "@/i18n-config";
 import { getDictionary } from "@/get-dictionary";
 import { ThemeProvider } from "@/components/providers/ThemeProviders";
+import Providers from "@/components/providers/Providers";
 
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
@@ -20,14 +21,16 @@ export default async function Root({
   return (
     <html lang={params.lang} suppressHydrationWarning>
       <body>
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );

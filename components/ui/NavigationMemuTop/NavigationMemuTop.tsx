@@ -10,28 +10,55 @@ import {
 } from "@/components/ui/navigation-menu";
 import React from "react";
 import { useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { Locale } from "@/i18n-config";
+import LocaleSwitcher from "../LocaleSwitcher/LocaleSwitcher";
+import { ModeToggle } from "../ModeToggle";
+import SingOut from "../SignOut";
 
-export default function NavigationMenuTop() {
-  //   const { data: session } = useSession();
-  const pathname = usePathname();
-  console.log("pathname", pathname);
+export default function NavigationMenuTop({ lang }: { lang?: Locale }) {
+  const { data: session } = useSession();
+
   return (
     <NavigationMenu className='flex justify-between w-full pb-5'>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <Link href='/'>
-              <Image src={`/Logo.webp`} width={50} height={50} alt='Logo' />
-            </Link>
-          </NavigationMenuLink>
+          <Link href={`/${lang}/homepage/`}>
+            <Image src={`/Logo.webp`} width={50} height={50} alt='Logo' />
+          </Link>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            <Link href={`/ua/catalog/`}>Catalog</Link>
+          <NavigationMenuLink className={navigationMenuTriggerStyle()} asChild>
+            <Link href={`/${lang}/catalog/`}>Catalog</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+        {!session || !session.user ? (
+          <>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                asChild
+              >
+                <Link href={`/${lang}/login/`}>Login</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                asChild
+              >
+                <Link href={`/${lang}/register/`}>Register</Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </>
+        ) : (
+          <NavigationMenuItem>
+            {session.user.name}
+            {/* <SingOut /> */}
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
+      <LocaleSwitcher lang={lang} />
+      <ModeToggle></ModeToggle>
     </NavigationMenu>
   );
 }

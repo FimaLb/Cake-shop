@@ -14,7 +14,6 @@ export default function CardItem({ data }: { data: CardEntity | null }) {
   const description = data?.description ? data?.description : "";
   const alt = data?.alt ? data?.alt : "placeholder";
 
-  console.log("data", data);
   return (
     <>
       <Card className='flex flex-col items-center justify-center flex-wrap min-w-[220px] max-w-[220px]'>
