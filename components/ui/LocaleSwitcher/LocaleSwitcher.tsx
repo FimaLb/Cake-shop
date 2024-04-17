@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { i18n, type Locale } from "../../../i18n-config";
 import {
@@ -13,6 +13,7 @@ import {
 
 export default function LocaleSwitcher({ lang }: { lang?: Locale }) {
   const pathName = usePathname();
+  const router = useRouter();
   const redirectedPathName = (locale: Locale) => {
     if (!pathName) return "/";
     const segments = pathName.split("/");
@@ -20,21 +21,23 @@ export default function LocaleSwitcher({ lang }: { lang?: Locale }) {
     return segments.join("/");
   };
 
+  const onChange = (locale: Locale) => {
+    if (locale === lang) return;
+    const newPath = redirectedPathName(locale);
+    router.push(newPath);
+  };
+
   return (
-    <Select>
+    <Select onValueChange={onChange}>
       <SelectTrigger className='w-[80px]'>
         <SelectValue placeholder={lang?.toUpperCase()} />
       </SelectTrigger>
       <SelectContent>
         {i18n.locales.map((locale) => {
           return (
-            <Link
-              key={locale}
-              href={redirectedPathName(locale)}
-              style={{ display: "block" }}
-            >
+            <SelectItem key={locale} value={locale}>
               {locale.toUpperCase()}
-            </Link>
+            </SelectItem>
           );
         })}
       </SelectContent>
