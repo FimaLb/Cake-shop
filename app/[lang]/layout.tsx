@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { Toaster } from "@/components/ui/toaster";
 import "@/app/globals.css";
 import { i18n, type Locale } from "@/i18n-config";
 import { getDictionary } from "@/get-dictionary";
@@ -29,6 +29,7 @@ export default async function Root({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </Providers>
       </body>

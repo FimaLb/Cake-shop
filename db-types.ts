@@ -17,8 +17,8 @@ export interface UsersEntity {
 export interface CustomerMessageEntity {
   id: string;
   name: string;
-  email?: string;
-  customer_message: string;
+  email: string;
+  message: string;
 }
 export interface CategoryEntity {
   id: string;

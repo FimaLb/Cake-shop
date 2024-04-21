@@ -22,21 +22,19 @@ function getLocale(request: NextRequest): string | undefined {
 }
 
 export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  const pathnameIsMissingLocale = i18n.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  );
-
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request);
-    return NextResponse.redirect(
-      new URL(
-        `/${locale}${pathname.startsWith("/") ? "/homepage" : "/"}${pathname}`,
-        request.url
-      )
-    );
-  }
+  // const { pathname } = request.nextUrl;
+  // const pathnameIsMissingLocale = i18n.locales.every(
+  //   (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+  // );
+  // if (pathnameIsMissingLocale) {
+  //   const locale = getLocale(request);
+  //   return NextResponse.redirect(
+  //     new URL(
+  //       `/${locale}${pathname.startsWith("/") ? "/homepage" : "/"}${pathname}`,
+  //       request.url
+  //     )
+  //   );
+  // }
 }
 
 export const config = {

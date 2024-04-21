@@ -31,6 +31,7 @@ export default function NavigationMenuTop({ lang }: { lang?: Locale }) {
             <Link href={`/${lang}/catalog/`}>Catalog</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
+
         {!session || !session.user ? (
           <>
             <NavigationMenuItem>
@@ -38,7 +39,9 @@ export default function NavigationMenuTop({ lang }: { lang?: Locale }) {
                 className={navigationMenuTriggerStyle()}
                 asChild
               >
-                <Link href={`/${lang}/login/`}>Login</Link>
+                <Link scroll={false} href={`/${lang}/login/`}>
+                  Login
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -46,15 +49,34 @@ export default function NavigationMenuTop({ lang }: { lang?: Locale }) {
                 className={navigationMenuTriggerStyle()}
                 asChild
               >
-                <Link href={`/${lang}/register/`}>Register</Link>
+                <Link scroll={false} href={`/${lang}/register/`}>
+                  Register
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </>
         ) : (
-          <NavigationMenuItem>
-            {session.user.name}
-            {/* <SingOut /> */}
-          </NavigationMenuItem>
+          <>
+            {" "}
+            {session?.user?.name && (
+              <NavigationMenuItem className='font-semibold pr-5'>
+                {session.user.name}
+              </NavigationMenuItem>
+            )}
+            <NavigationMenuItem>
+              <SingOut />
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                asChild
+              >
+                <Link scroll={false} href={`/${lang}/comments/`}>
+                  Comments
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          </>
         )}
       </NavigationMenuList>
       <LocaleSwitcher lang={lang} />

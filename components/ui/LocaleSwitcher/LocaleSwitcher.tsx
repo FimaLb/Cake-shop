@@ -1,7 +1,6 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import Link from "next/link";
 import { i18n, type Locale } from "../../../i18n-config";
 import {
   Select,
@@ -29,7 +28,7 @@ export default function LocaleSwitcher({ lang }: { lang?: Locale }) {
 
   return (
     <Select onValueChange={onChange}>
-      <SelectTrigger className='w-[80px]'>
+      <SelectTrigger className='w-[80px] gap-5'>
         <SelectValue placeholder={lang?.toUpperCase()} />
       </SelectTrigger>
       <SelectContent>

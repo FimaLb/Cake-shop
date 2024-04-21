@@ -1,9 +1,16 @@
-"use server";
+"use client";
 import { getUserByCredentials } from "@/loaders/users";
 import signInCredentials from "@/actions/auth/signInCredentials";
-import { redirect } from "next/navigation";
 
-export default async function registration(formData: FormData) {
+export interface registrationCredentialsState {
+  status?: boolean;
+  message?: string;
+}
+
+export default async function registration(
+  state: registrationCredentialsState,
+  formData: FormData
+): Promise<registrationCredentialsState> {
   const data = {
     id: formData.get("id"),
     name: formData.get("name"),
@@ -16,6 +23,8 @@ export default async function registration(formData: FormData) {
 
   try {
     const user = await getUserByCredentials(data.email, data.password);
+    const state = {};
+
     if (!user?.id) {
       const res = await fetch(`${process.env.API_BASE_PATH}/users`, {
         method: "POST",
@@ -23,14 +32,29 @@ export default async function registration(formData: FormData) {
       });
 
       if (res.ok) {
-        console.log("The user is added!");
-        await signInCredentials(formData);
-        // redirect("/");
+        await signInCredentials(state, formData);
+        return {
+          status: true,
+          message: "The user is added!",
+        };
       }
+
+      return {
+        status: false,
+        message: "Something went wrong!",
+      };
     } else {
-      console.log("The user is already registered!");
+      return {
+        status: false,
+        message: "The user is already registered!",
+      };
     }
   } catch (error) {
-    console.log("registration error", error);
+    return {
+      status: false,
+      message: "registration error",
+    };
   }
 }
+
+export type registrationCredentialsAction = typeof registration;

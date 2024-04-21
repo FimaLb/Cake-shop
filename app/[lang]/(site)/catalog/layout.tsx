@@ -1,5 +1,6 @@
 import "@/app/globals.css";
 import BackButton from "@/components/ui/BackButton";
+import PageWrapper from "@/components/ui/PageWrapper";
 
 export default async function Root({
   children,
@@ -9,7 +10,7 @@ export default async function Root({
   return (
     <>
       <BackButton>Back</BackButton>
-      {children}
+      <PageWrapper>{children}</PageWrapper>
     </>
   );
 }

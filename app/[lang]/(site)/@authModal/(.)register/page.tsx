@@ -1,7 +1,8 @@
 import registration from "@/actions/auth/registration";
 import RegisterForm from "@/components/ui/RegisterForm/RegisterForm";
+import Modal from "@/components/ui/Modal/Modal";
 
-export default function Register({
+export default function Login({
   searchParams,
 }: {
   searchParams: {
@@ -9,8 +10,8 @@ export default function Register({
   };
 }) {
   return (
-    <>
+    <Modal>
       <RegisterForm action={registration} />
-    </>
+    </Modal>
   );
 }

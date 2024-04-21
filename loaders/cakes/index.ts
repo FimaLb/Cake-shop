@@ -2,10 +2,19 @@ import { type CakeItem } from "@/components/ui/CakeItem/CakeItem";
 import { CakesEntity } from "@/db-types";
 
 export async function getCakesByCategoryAlias(
-  category: string
+  category: string,
+  filters?: {
+    weight?: string;
+    shape?: string;
+  }
 ): Promise<CakesEntity[] | null> {
   const res = await fetch(
-    `${process.env.API_BASE_PATH}/categories?alias=${category}&_embed=cakes`
+    `${process.env.API_BASE_PATH}/categories?alias=${category}&_embed=cakes`,
+    {
+      next: {
+        tags: ["cakes-by-category-alias"],
+      },
+    }
   );
 
   if (!res.ok) {
@@ -16,7 +25,23 @@ export async function getCakesByCategoryAlias(
   if (currentCategory?.length) {
     currentCategory = currentCategory[0];
   }
-  return currentCategory?.cakes?.length ? currentCategory?.cakes : null;
+
+  if (currentCategory?.cakes?.length) {
+    let cakes = currentCategory?.cakes;
+    if (filters?.weight) {
+      cakes = cakes.filter((cake: CakesEntity) =>
+        cake.weight && filters.weight ? +filters.weight <= cake.weight : false
+      );
+    }
+    if (filters?.shape) {
+      cakes = cakes.filter((cake: CakesEntity) =>
+        cake.shapeId && filters.shape ? cake.shapeId === filters.shape : false
+      );
+    }
+    return cakes;
+  } else {
+    return null;
+  }
 }
 
 export async function getCakeByAlias(entity: string): Promise<CakeItem | null> {

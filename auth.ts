@@ -19,9 +19,10 @@ const credentialsConfig = CredentialsProvider({
     const { email, password }: { email: string; password: string } | any =
       credentials;
     const user = await getUserByCredentials(email, password);
-
+    console.log("user server", user);
     if (user !== null) {
       return {
+        id: user.id,
         name: user.name,
       };
     }

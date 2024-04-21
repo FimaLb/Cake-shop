@@ -1,18 +1,21 @@
 "use client";
+import registration, {
+  registrationCredentialsAction,
+} from "@/actions/auth/registration";
 import { Button } from "../button";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "../input";
 import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
-import { signInCredentialsAction } from "@/actions/auth/signInCredentials";
 import SpinnerLoading from "../SpinnerLoading/SpinnerLoading";
+import { v4 as uuidv4 } from "uuid";
 
-interface LoginFormProps {
-  action: signInCredentialsAction;
+interface RegisterFormProps {
+  action: registrationCredentialsAction;
 }
 
-export default function LoginForm({ action }: LoginFormProps) {
+export default function RegisterForm({ action }: RegisterFormProps) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const [state, formAction] = useFormState(action, {});
@@ -23,11 +26,11 @@ export default function LoginForm({ action }: LoginFormProps) {
     if (state.status) {
       setIsLoading(false);
       toast({
-        title: "Login Page",
+        title: "Register Page",
         description: state?.message,
       });
       formRef.current?.reset();
-      // router.push("/");
+      router.push("/");
     }
   }, [state]);
 
@@ -37,12 +40,13 @@ export default function LoginForm({ action }: LoginFormProps) {
 
   return (
     <div className='rounded-lg border bg-card p-5 text-card-foreground shadow-sm flex flex-col'>
-      <h1>Login page</h1>
-      <form
-        className='flex flex-col gap-10 w-96'
-        ref={formRef}
-        action={formAction}
-      >
+      <h1>Register page</h1>
+      <form className='flex flex-col gap-10 w-96' action={formAction}>
+        <input type='hidden' value={uuidv4()} name='id' />
+        <div>
+          <label>Name:</label>
+          <Input name='name' required />
+        </div>
         <div>
           <label>Email:</label>
           <Input name='email' required />
